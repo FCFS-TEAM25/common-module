@@ -7,22 +7,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-@Component
 public class CustomPageable extends PageableHandlerMethodArgumentResolver {
 
     @Override
     public @NonNull Pageable resolveArgument(@NonNull MethodParameter methodParameter,
-        ModelAndViewContainer mavContainer,
-        @NonNull NativeWebRequest webRequest,
-        WebDataBinderFactory binderFactory
+                                             ModelAndViewContainer mavContainer,
+                                             @NonNull NativeWebRequest webRequest,
+                                             WebDataBinderFactory binderFactory
     ) {
         Pageable defaultPageable = super.resolveArgument(methodParameter, mavContainer, webRequest,
-            binderFactory);
+                binderFactory);
 
         int pageSize = defaultPageable.getPageSize();
         if (pageSize != 10 && pageSize != 30 && pageSize != 50) {
@@ -35,9 +33,9 @@ public class CustomPageable extends PageableHandlerMethodArgumentResolver {
         }
 
         return PageRequest.of(
-            defaultPageable.getPageNumber(),
-            pageSize,
-            sort
+                defaultPageable.getPageNumber(),
+                pageSize,
+                sort
         );
     }
 }
